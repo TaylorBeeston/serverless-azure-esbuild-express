@@ -1,0 +1,29 @@
+service: azure
+
+frameworkVersion: '3'
+
+provider:
+  name: azure
+  region: West US 2
+  runtime: nodejs12
+
+plugins:
+  - serverless-azure-functions
+
+package:
+  patterns:
+    - "!**"
+    - dist/**
+    - app/**
+    - host.json
+    - local.settings.json
+
+functions:
+  app:
+    handler: dist/index.app
+    events:
+      - http: true
+        route: "{test}"
+        method: ANY
+        cors: true
+        authLevel: anonymous
